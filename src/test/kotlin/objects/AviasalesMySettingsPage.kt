@@ -3,6 +3,7 @@ package objects
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.PageFactory
+import waitAndFindElement
 
 // page_url = https://www.aviasales.ru/my/settings
 class AviasalesMySettingsPage(val driver: WebDriver) {
@@ -16,10 +17,10 @@ class AviasalesMySettingsPage(val driver: WebDriver) {
     }
 
     fun changeToDarkTheme(){
-        driver.findElement(darkThemeButton).click()
+        driver.waitAndFindElement(darkThemeButton).click()
     }
 
     fun changeToLightTheme(){
-        driver.findElement(lightThemeButton).click()
+        driver.waitAndFindElement(lightThemeButton).click()
     }
 }
