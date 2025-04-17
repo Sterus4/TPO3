@@ -21,6 +21,5 @@ class MySettingsPageTest : SeleniumTest(AviasalesPage.page_url) {
 
         settingsPage.changeToDarkTheme()
 
-        //TODO assert theme changed
     }
 }

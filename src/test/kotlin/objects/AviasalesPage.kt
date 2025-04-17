@@ -22,12 +22,12 @@ class AviasalesPage(val driver: WebDriver) {
     private val toCityFirst = By.xpath("//li[@id='avia_form_destination-item-0']/div[2]/div/span/span[2]")
     private val whenToGo = By.xpath("//*[contains(text(), 'Когд')]")
     private val whenToComeBack = By.xpath("//*[contains(text(), 'Обратн')]")
-    protected val findTickets = By.xpath("//button[@data-test-id='form-submit']")
+    protected val findTickets = By.xpath("/html/body/div[1]/div/div[2]/div[2]/div[2]/div/form/div[1]/button")
     private val cheapestTicket = By.xpath("//span[contains(text(), 'Самый де')]")
     private val firstTicket = By.xpath("//a[@data-test-id='ticket-1']/div/div/div")
-    private val randomTicket = By.xpath("//div[contains(text(), 'Выбрать билет')]")
     private val supportButton = By.xpath("//a[@data-test-id='header-support-button']")
     private val muitipathButton = By.xpath("//button[@data-test-id='switch-to-multiwayform']")
+    private val favoritesButton = By.xpath("/html/body/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/nav/ul[1]/li[4]")
 
     companion object {
         val page_url = "https://www.aviasales.ru/"
@@ -61,10 +61,10 @@ class AviasalesPage(val driver: WebDriver) {
         ).sendKeys(phoneNumber)
         driver.waitAndFindElement(By.xpath("//*[@id=\"root\"]/div/div/div/div/div/div/div[2]/div/div/div/form/div[2]/div[1]/button[1]")).click()
         // Вводим верный пароль
-        Thread.sleep(15000)
+        Thread.sleep(20000)
         driver.waitAndFindElement(By.xpath("//*[@id=\"root\"]/div/div/div/div/div[1]/div/div/div/div/div/form/div[2]/button")).click()
         // Вводим капчу
-        Thread.sleep(15000)
+        Thread.sleep(30000)
         driver.waitAndFindElement(By.xpath("//*[@id=\"root\"]/div/div/div/div/div/div/div/div/div/div/form/div[3]/button")).click()
         driver.switchTo().window(originalWindow)
     }
@@ -74,8 +74,8 @@ class AviasalesPage(val driver: WebDriver) {
         driver.waitAndFindElement(openMySettingsWindow).click()
     }
 
-    fun createMultiPath(city1: String, city2: String, city3: String){
-
+    fun createMultiPath(){
+        driver.waitAndFindElement(muitipathButton).click()
     }
 
     fun changeCurrencyTo(curr: String){
@@ -87,14 +87,12 @@ class AviasalesPage(val driver: WebDriver) {
     fun selectFromCity(city: String){
         driver.waitAndFindElement(fromCity).click()
         driver.waitAndFindElement(fromCity).sendKeys(city)
-        Thread.sleep(1000)
         driver.waitAndFindElement(fromCityFirst).click()
     }
 
     fun selectToCity(city: String){
         driver.waitAndFindElement(toCity).click()
         driver.waitAndFindElement(toCity).sendKeys(city)
-        Thread.sleep(1000)
         driver.waitAndFindElement(toCityFirst).click()
     }
 
@@ -108,7 +106,7 @@ class AviasalesPage(val driver: WebDriver) {
     }
 
     fun findTickets(){
-        driver.findElement(findTickets).click()
+        driver.waitAndFindElement(findTickets).click()
     }
 
     fun chooseOnPriceChartAndCommit(date: String){
@@ -137,5 +135,9 @@ class AviasalesPage(val driver: WebDriver) {
 
     fun openVkLoginForm() {
         driver.switchToAnotherWindow { driver.waitAndFindElement(loginUsingVK).click() }
+    }
+
+    fun openFavorites(){
+        driver.switchToAnotherWindow { driver.waitAndFindElement(favoritesButton).click()}
     }
 }

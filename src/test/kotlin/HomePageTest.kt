@@ -1,7 +1,4 @@
-import objects.AviasalesBookingPage
-import objects.AviasalesFaqPage
-import objects.AviasalesPage
-import objects.AviasalesSearchPage
+import objects.*
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -17,15 +14,39 @@ class HomePageTest : SeleniumTest(AviasalesPage.page_url){
     private lateinit var aviasalesSearchPage: AviasalesSearchPage
     private lateinit var aviasalesFaqPage: AviasalesFaqPage
     private lateinit var aviasalesBookingPage: AviasalesBookingPage
+    private lateinit var aviasalesFavoritesAviaPage: AviasalesFavoritesAviaPage
     @BeforeTest
     override fun initPages() {
         aviasalesPage = AviasalesPage(driver)
         aviasalesSearchPage = AviasalesSearchPage(driver)
         aviasalesFaqPage = AviasalesFaqPage(driver)
         aviasalesBookingPage = AviasalesBookingPage(driver)
+        aviasalesFavoritesAviaPage = AviasalesFavoritesAviaPage(driver)
         aviasalesPage.closeGoogleIFrameIfExist()
         aviasalesPage.acceptCookiesIfExist()
     }
+
+    @Test
+    fun favoritesTest(){
+        loginByVk()
+        Thread.sleep(6000)
+        aviasalesPage.selectFromCity("Челяб")
+        aviasalesPage.selectToCity("Санкт")
+        aviasalesPage.openFirstTicket()
+        try {
+            driver.waitAndFindElement(By.xpath("//*[@id=\"avs-modal-container\"]/div/div/div/div/div[1]/div/div/div[3]/div/button")).click()
+        } catch (_:Exception) {}
+        aviasalesSearchPage.likeQuery()
+        try {
+            driver.waitAndFindElement(By.xpath("//*[@id=\"avs-modal-container\"]/div/div/div/div/div[1]/div/div/div[3]/div/button")).click()
+        } catch (_:Exception) {}
+        aviasalesSearchPage.closeQuery()
+        try {
+            driver.waitAndFindElement(By.xpath("//*[@id=\"avs-modal-container\"]/div/div/div/div/div[1]/div/div/div[3]/div/button")).click()
+        } catch (_:Exception) {}
+        aviasalesPage.openFavorites()
+    }
+
     @ParameterizedTest
     @ValueSource(strings = [
         "EUR",
@@ -68,6 +89,7 @@ class HomePageTest : SeleniumTest(AviasalesPage.page_url){
         aviasalesPage.openProfilePopUbDialog()
         aviasalesPage.openLoginPopUp()
         aviasalesPage.loginUsingVK("9511124405")
+
     }
 
     @ParameterizedTest
@@ -139,7 +161,6 @@ class HomePageTest : SeleniumTest(AviasalesPage.page_url){
     ])
     fun showFAQQuestionsTest(title: String){
         aviasalesPage.openSupport()
-
         aviasalesFaqPage.listToTitle(title)
         Thread.sleep(2000)
     }

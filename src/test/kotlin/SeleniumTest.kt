@@ -18,7 +18,7 @@ abstract class SeleniumTest(
 
     @BeforeTest
     fun setUp() {
-        driver = FirefoxDriver()
+        driver = ChromeDriver()
         driver.get(url)
         driver.manage().window().size = Dimension(1136, 692)
     }
