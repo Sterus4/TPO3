@@ -18,7 +18,7 @@ class SearchPageTest: SeleniumTest(AviasalesPage.page_url) {
 
     @ParameterizedTest
     @CsvSource(
-        "Москв, Санкт-Петер, Челябинск"
+        "Москва, Хабаровск, Челябинск",
     )
     fun multiPathTest(city1: String, city2: String, city3: String){
         aviasalesPage.createMultiPath()

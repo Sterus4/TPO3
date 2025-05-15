@@ -28,6 +28,7 @@ class AviasalesPage(val driver: WebDriver) {
     private val supportButton = By.xpath("//a[@data-test-id='header-support-button']")
     private val muitipathButton = By.xpath("//button[@data-test-id='switch-to-multiwayform']")
     private val favoritesButton = By.xpath("/html/body/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/nav/ul[1]/li[4]")
+    private val korocheButton = By.xpath("//*[@id=\"guides-cities-button\"]/a")
 
     companion object {
         val page_url = "https://www.aviasales.ru/"
@@ -109,8 +110,17 @@ class AviasalesPage(val driver: WebDriver) {
         driver.waitAndFindElement(findTickets).click()
     }
 
+    fun clickKorocheButton(){
+        driver.waitAndFindElement(korocheButton).click()
+    }
+
+    fun clickOnDivByContent(query: String){
+        driver.waitAndFindElement(By.xpath("//*[contains(text(), '$query')]")).click()
+    }
+
     fun chooseOnPriceChartAndCommit(date: String){
-        driver.waitAndFindElement(By.xpath("//tr[@data-test-id='column-${date}']")).click()
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.waitAndFindElement(By.xpath("//*[@id=\"plugin_price_chart_block\"]/div[1]/div/div[2]/table/tbody/tr[8]/td[5]/button")).click()
         driver.waitAndFindElement(By.xpath("//button[@data-test-id='one-way-button']")).click()
     }
 

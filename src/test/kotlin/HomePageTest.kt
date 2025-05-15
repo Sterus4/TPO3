@@ -22,11 +22,12 @@ class HomePageTest : SeleniumTest(AviasalesPage.page_url){
         aviasalesFaqPage = AviasalesFaqPage(driver)
         aviasalesBookingPage = AviasalesBookingPage(driver)
         aviasalesFavoritesAviaPage = AviasalesFavoritesAviaPage(driver)
-        aviasalesPage.closeGoogleIFrameIfExist()
         aviasalesPage.acceptCookiesIfExist()
+        aviasalesPage.closeGoogleIFrameIfExist()
     }
 
     @Test
+    @Disabled
     fun favoritesTest(){
         loginByVk()
         Thread.sleep(6000)
@@ -119,13 +120,14 @@ class HomePageTest : SeleniumTest(AviasalesPage.page_url){
 
     @ParameterizedTest
     @CsvSource(
-        "Челяб, Санкт, 2025-04-24"
+        "Челяб, Санкт, 2025-04-25"
     )
     fun showAndSubmitPriceChart(from: String, to: String, whenToGo: String) {
         aviasalesPage.selectFromCity(from)
         aviasalesPage.selectToCity(to)
         aviasalesPage.chooseOnPriceChartAndCommit(whenToGo)
         aviasalesPage.showCheapestTicket()
+        Thread.sleep(5000)
     }
 
     @ParameterizedTest

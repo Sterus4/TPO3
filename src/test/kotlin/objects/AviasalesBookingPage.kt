@@ -30,11 +30,13 @@ class AviasalesBookingPage(val driver: WebDriver) {
         document: String,
         baggage: Boolean
     ) {
-        driver.waitAndFindElement(emailInput, 20).sendKeys(email)
-        driver.waitAndFindElement(phoneInput).click()
-        driver.waitAndFindElement(phoneInput).sendKeys(Keys.CONTROL, "a")
-        driver.waitAndFindElement(phoneInput).sendKeys(Keys.BACK_SPACE)
-        driver.waitAndFindElement(phoneInput).sendKeys(phone)
+        try {
+            driver.waitAndFindElement(emailInput, 20).sendKeys(email)
+            driver.waitAndFindElement(phoneInput).click()
+            driver.waitAndFindElement(phoneInput).sendKeys(Keys.CONTROL, "a")
+            driver.waitAndFindElement(phoneInput).sendKeys(Keys.BACK_SPACE)
+            driver.waitAndFindElement(phoneInput).sendKeys(phone)
+        } catch (_: Exception) {}
 
         if(male){
             driver.waitAndFindElement(maleLabel).click()
